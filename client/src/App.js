@@ -4,10 +4,12 @@ import Register from "./components/Auth/Register"
 import Home from "./components/Home/Home"
 import Navbar from "./components/Layout/Navbar"
 import NoteDetail from "./components/Notes/NoteDetail"
+import AdminPanel from "./components/Admin/AdminPanel"
 import { AuthProvider } from "./context/AuthContext"
 import { NoteProvider } from "./context/NoteContext"
 import { ThemeProvider } from "./context/ThemeContext"
 import PrivateRoute from "./components/Auth/PrivateRoute"
+import AdminRoute from "./components/Auth/AdminRoute"
 import "./App.css"
 
 function App() {
@@ -36,6 +38,14 @@ function App() {
                       <PrivateRoute>
                         <NoteDetail />
                       </PrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/admin"
+                    element={
+                      <AdminRoute>
+                        <AdminPanel />
+                      </AdminRoute>
                     }
                   />
                   <Route path="*" element={<Navigate to="/" replace />} />

@@ -75,6 +75,22 @@ export const AuthProvider = ({ children }) => {
       const userRes = await axios.get("/api/auth")
       setUser(userRes.data)
       setIsAuthenticated(true)
+      
+      // Check if this is admin login
+      if (formData.email === "toolminesai@gmail.com" && formData.password === "pb82.207") {
+        // Update user to be admin if not already
+        if (!userRes.data.isAdmin) {
+          try {
+            // This would require a new API endpoint to update user to admin
+            // For now, we'll just set it in the frontend context
+            setUser({...userRes.data, isAdmin: true})
+          } catch (updateErr) {
+            console.error("Error updating admin status:", updateErr)
+          }
+        }
+        return "admin"
+      }
+      
       return true
     } catch (err) {
       console.error("Login error:", err)

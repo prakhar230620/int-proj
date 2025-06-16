@@ -11,22 +11,31 @@ const Login = () => {
     password: "",
   })
   const { email, password } = formData
-  const { login, isAuthenticated, error, clearErrors } = useContext(AuthContext)
+  const { login, isAuthenticated, error } = useContext(AuthContext)
   const navigate = useNavigate()
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/")
+      // Check if this is admin login
+      if (email === "toolminesai@gmail.com" && password === "pb82.207") {
+        navigate("/admin")
+      } else {
+        navigate("/")
+      }
     }
-  }, [isAuthenticated, navigate])
+  }, [isAuthenticated, navigate, email, password])
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
-    login({ email, password })
+    const result = await login({ email, password })
+    
+    if (result === "admin") {
+      navigate("/admin")
+    }
   }
 
   return (

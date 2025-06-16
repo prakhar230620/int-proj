@@ -51,7 +51,7 @@ const noteReducer = (state, action) => {
         ...state,
         filtered: state.notes.filter((note) => {
           const regex = new RegExp(`${action.payload}`, "gi")
-          return note.title.match(regex) || note.description.match(regex)
+          return (note.title && note.title.match(regex)) || (note.description && note.description.match(regex))
         }),
       }
     case "CLEAR_FILTER":
