@@ -13,7 +13,7 @@ const Register = () => {
     password2: "",
   })
   const { name, email, password, password2 } = formData
-  const { register, isAuthenticated, error, clearErrors } = useContext(AuthContext)
+  const { register, isAuthenticated, error } = useContext(AuthContext)
   const [localError, setLocalError] = useState(null)
   const navigate = useNavigate()
 
