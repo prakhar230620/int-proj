@@ -191,11 +191,17 @@ NotesKeeper/
 
 ### Installation Commands
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/noteskeeper.git
+
+#creat an empty folder on your desktop
+mkdir noteskeeper
+
+# Clone the repository in noteskeeper folder
+
+git clone https://github.com/prakhar230620/int-proj.git
 
 # Navigate to project directory
 cd noteskeeper
+
 
 # Install server dependencies
 npm install
