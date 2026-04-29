@@ -1,96 +1,168 @@
+/* ===========================
+   Navbar Styles
+   =========================== */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.7rem 2rem;
-  background-color: var(--primary-color);
-  color: var(--white-color);
-  box-shadow: var(--box-shadow);
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+  color: #fff;
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+  border-radius: 0 0 16px 16px;
 }
 
 .navbar h1 {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
+  font-weight: 700;
 }
 
-.navbar a {
-  color: var(--white-color);
-  margin: 0 0.5rem;
+.navbar h1 a {
+  color: #fff !important;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* All links inside navbar default to white */
+.navbar a,
+.navbar a:visited {
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0.25rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.navbar a:hover {
+  color: #fff;
+  opacity: 1;
 }
 
 .navbar ul {
   display: flex;
   align-items: center;
+  gap: 0.25rem;
 }
 
 .navbar li {
-  margin-left: 1rem;
+  list-style: none;
 }
 
-.theme-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.2rem;
-}
-
-/* Profile link in Navbar */
+/* ---- Profile pill ---- */
 .nav-profile-link {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: var(--white-color) !important;
+  color: #fff !important;
   font-weight: 600;
-  padding: 0.3rem 0.75rem 0.3rem 0.3rem;
+  font-size: 0.9rem;
+  padding: 0.3rem 0.9rem 0.3rem 0.3rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.15);
-  transition: var(--transition);
-  text-decoration: none;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
+  text-decoration: none !important;
+  margin: 0 !important;
 }
 
 .nav-profile-link:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.32);
+  color: #fff !important;
   opacity: 1 !important;
+  transform: translateY(-1px);
 }
 
+/* ---- Avatar circle ---- */
 .nav-avatar {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.35);
+  border: 2px solid rgba(255, 255, 255, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-size: 0.78rem;
+  font-weight: 800;
   color: #fff;
   flex-shrink: 0;
+  letter-spacing: 0;
 }
 
+/* ---- Logout link ---- */
 .nav-logout {
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  opacity: 0.85;
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-weight: 500;
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
 }
 
 .nav-logout:hover {
-  opacity: 1;
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.15);
+  opacity: 1 !important;
 }
 
+/* ---- Admin link ---- */
+.navbar a[href="/admin"] {
+  padding: 0.3rem 0.75rem;
+  background: rgba(245, 158, 11, 0.25);
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  border-radius: 6px;
+  color: #fde68a !important;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.navbar a[href="/admin"]:hover {
+  background: rgba(245, 158, 11, 0.4);
+  color: #fff !important;
+}
+
+/* ---- Theme toggle button ---- */
+.theme-toggle {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.1);
+}
+
+/* ---- Responsive ---- */
 @media (max-width: 768px) {
   .navbar {
     padding: 0.7rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 
   .navbar h1 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   .navbar ul {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.15rem;
+  }
+
+  .nav-profile-link span:last-child {
+    display: none; /* hide name text, show only avatar on mobile */
   }
 }
-

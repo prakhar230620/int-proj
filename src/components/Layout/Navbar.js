@@ -50,7 +50,8 @@ const Navbar = () => {
   )
 
   return (
-    <nav className="navbar glass-panel" style={{ borderRadius: "0 0 16px 16px", borderTop: "none" }}>
+    <nav className="navbar">
+
       <h1>
         <Link to="/">
           <i className="fas fa-sticky-note"></i> NotesKeeper
