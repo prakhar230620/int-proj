@@ -16,14 +16,27 @@ const Navbar = () => {
 
   const authLinks = (
     <>
-      <li>Hello, {user && user.name}</li>
       <li>
-        <a onClick={onLogout} href="#!">
+        <Link to="/profile" className="nav-profile-link">
+          <span className="nav-avatar">
+            {user && user.name ? user.name[0].toUpperCase() : "?"}
+          </span>
+          {user && user.name}
+        </Link>
+      </li>
+      {user && user.isAdmin && (
+        <li>
+          <Link to="/admin">Admin</Link>
+        </li>
+      )}
+      <li>
+        <a onClick={onLogout} href="#!" className="nav-logout">
           <i className="fas fa-sign-out-alt"></i> <span>Logout</span>
         </a>
       </li>
     </>
   )
+
 
   const guestLinks = (
     <>

@@ -26,6 +26,8 @@ app.use(cors({
 app.use("/api/users", require("./routes/users"))
 app.use("/api/auth", require("./routes/auth"))
 app.use("/api/notes", require("./routes/notes"))
+app.use("/api/profile", require("./routes/profile"))
+
 
 const PORT = process.env.SERVER_PORT || 5000
 

@@ -5,6 +5,7 @@ import Home from "./components/Home/Home"
 import Navbar from "./components/Layout/Navbar"
 import NoteDetail from "./components/Notes/NoteDetail"
 import AdminPanel from "./components/Admin/AdminPanel"
+import Profile from "./components/Profile/Profile"
 import { AuthProvider } from "./context/AuthContext"
 import { NoteProvider } from "./context/NoteContext"
 import { ThemeProvider } from "./context/ThemeContext"
@@ -46,6 +47,14 @@ function App() {
                       <AdminRoute>
                         <AdminPanel />
                       </AdminRoute>
+                    }
+                  />
+                  <Route
+                    path="/profile"
+                    element={
+                      <PrivateRoute>
+                        <Profile />
+                      </PrivateRoute>
                     }
                   />
                   <Route path="*" element={<Navigate to="/" replace />} />

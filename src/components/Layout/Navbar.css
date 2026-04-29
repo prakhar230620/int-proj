@@ -36,6 +36,50 @@
   font-size: 1.2rem;
 }
 
+/* Profile link in Navbar */
+.nav-profile-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--white-color) !important;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem 0.3rem 0.3rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.nav-profile-link:hover {
+  background: rgba(255, 255, 255, 0.25);
+  opacity: 1 !important;
+}
+
+.nav-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.nav-logout {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  opacity: 0.85;
+}
+
+.nav-logout:hover {
+  opacity: 1;
+}
+
 @media (max-width: 768px) {
   .navbar {
     padding: 0.7rem 1rem;
@@ -49,3 +93,4 @@
     font-size: 0.9rem;
   }
 }
+

@@ -111,8 +111,28 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false)
   }
 
+  // Update profile
+  const updateProfile = async (formData) => {
+    try {
+      setError(null)
+      const res = await axios.put("/api/profile", formData)
+      setUser(res.data)
+      return { success: true }
+    } catch (err) {
+      const msg =
+        err.response && err.response.data && err.response.data.msg
+          ? err.response.data.msg
+          : err.response && err.response.data && err.response.data.errors
+          ? err.response.data.errors[0].msg
+          : "Update failed. Please try again."
+      setError(msg)
+      return { success: false, msg }
+    }
+  }
+
   // Clear errors
   const clearErrors = () => setError(null)
+
 
   return (
     <AuthContext.Provider
@@ -124,8 +144,10 @@ export const AuthProvider = ({ children }) => {
         register,
         login,
         logout,
+        updateProfile,
         clearErrors,
       }}
+
     >
       {children}
     </AuthContext.Provider>
