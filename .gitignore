@@ -123,13 +123,9 @@ Thumbs.db
 *.ipr
 *.iws
 
-# Client-side build output
-client/build/
+# Build output
+build/
 
 # Package lock files
 package-lock.json
 yarn.lock
-
-# Specific to this project
-client/node_modules/
-server/node_modules/

@@ -4,7 +4,10 @@ import App from "./App"
 import axios from "axios"
 
 // Set base URL for axios
-axios.defaults.baseURL = process.env.NODE_ENV === "production" ? "" : "http://localhost:50000"
+// Empty string = relative URLs. In dev, CRA proxy (see package.json "proxy") forwards
+// /api/* to Express on port 3001. In production, Vercel rewrites handle it.
+axios.defaults.baseURL = ""
+
 
 // Add token to headers if exists
 const token = localStorage.getItem("token")

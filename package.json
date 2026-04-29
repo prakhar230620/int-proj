@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "Personal Notes App",
   "main": "api/index.js",
+  "proxy": "http://localhost:5000",
+
   "scripts": {
     "start": "react-scripts start",
     "server": "nodemon api/index.js",
