@@ -17,11 +17,14 @@ const Notes = () => {
     return <h3>Please add a note</h3>
   }
 
+  const sortedFiltered = filtered !== null ? [...filtered].sort((a, b) => b.isPinned - a.isPinned) : null;
+  const sortedNotes = [...notes].sort((a, b) => b.isPinned - a.isPinned);
+
   return (
     <div className="notes-grid">
-      {filtered !== null
-        ? filtered.map((note) => <NoteItem key={note._id} note={note} />)
-        : notes.map((note) => <NoteItem key={note._id} note={note} />)}
+      {sortedFiltered !== null
+        ? sortedFiltered.map((note) => <NoteItem key={note._id} note={note} />)
+        : sortedNotes.map((note) => <NoteItem key={note._id} note={note} />)}
     </div>
   )
 }

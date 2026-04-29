@@ -1,4 +1,5 @@
 const express = require("express")
+require("dotenv").config()
 const connectDB = require("./config/db")
 const cors = require("cors")
 const path = require("path")
@@ -27,4 +28,8 @@ if (process.env.NODE_ENV === "production") {
 
 const PORT = process.env.PORT || 50000
 
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+}
+
+module.exports = app

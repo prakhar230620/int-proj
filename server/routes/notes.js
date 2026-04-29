@@ -37,7 +37,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() })
     }
 
-    const { title, description, color } = req.body
+    const { title, description, color, isPinned } = req.body
 
     try {
       // Check if a note with the same title already exists for the user
@@ -51,6 +51,7 @@ router.post(
         title,
         description,
         color,
+        isPinned,
         user: req.user.id,
       })
 
@@ -67,13 +68,14 @@ router.post(
 // @desc    Update note
 // @access  Private
 router.put("/:id", auth, async (req, res) => {
-  const { title, description, color } = req.body
+  const { title, description, color, isPinned } = req.body
 
   // Build note object
   const noteFields = {}
   if (title) noteFields.title = title
   if (description) noteFields.description = description
   if (color) noteFields.color = color
+  if (isPinned !== undefined) noteFields.isPinned = isPinned
 
   try {
     let note = await Note.findById(req.params.id)

@@ -6,26 +6,46 @@
 }
 
 .auth-card {
-  background-color: var(--white-color);
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: var(--box-shadow);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: var(--glass-shadow);
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
+  border: 1px solid var(--glass-border);
+  animation: slideIn 0.4s ease-out;
 }
 
 .auth-card h2 {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   color: var(--primary-color);
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+.auth-card .btn {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.8rem;
+  font-size: 1.1rem;
 }
 
 .auth-switch {
   text-align: center;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  color: var(--text-secondary);
 }
 
 .auth-switch a {
   color: var(--primary-color);
-  font-weight: bold;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.auth-switch a:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
 }

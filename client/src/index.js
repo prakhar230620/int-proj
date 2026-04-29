@@ -4,7 +4,7 @@ import App from "./App"
 import axios from "axios"
 
 // Set base URL for axios
-axios.defaults.baseURL = "http://localhost:50000"
+axios.defaults.baseURL = process.env.NODE_ENV === "production" ? "" : "http://localhost:50000"
 
 // Add token to headers if exists
 const token = localStorage.getItem("token")

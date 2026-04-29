@@ -63,7 +63,7 @@ const NoteForm = () => {
   }
 
   return (
-    <div className="note-form-container">
+    <div className="note-form-container glass-panel">
       <form onSubmit={onSubmit}>
         <h2>{current ? "Edit Note" : "Add Note"}</h2>
         <div className="form-group">

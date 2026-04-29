@@ -7,8 +7,8 @@ import "./Notes.css"
 
 const NoteItem = ({ note }) => {
   const noteContext = useContext(NoteContext)
-  const { deleteNote, clearCurrent } = noteContext
-  const { _id, title, description, color } = note
+  const { deleteNote, clearCurrent, updateNote } = noteContext
+  const { _id, title, description, color, isPinned } = note
   const navigate = useNavigate()
 
   const onDelete = (e) => {
@@ -27,21 +27,40 @@ const NoteItem = ({ note }) => {
     return text.length > maxLength ? text.substring(0, maxLength) + "..." : text
   }
 
+  const onPin = (e) => {
+    e.stopPropagation()
+    updateNote({ ...note, isPinned: !isPinned })
+  }
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  }
+
   return (
     <div 
-      className="note-card" 
+      className={`note-card ${isPinned ? "pinned" : ""}`}
       style={{ borderTop: `5px solid ${color}`, cursor: "pointer" }} 
       onClick={viewNoteDetail}
     >
-      <h3>{title}</h3>
-      <p className="note-description">{truncateText(description, 100)}</p>
-      <div className="note-actions" onClick={(e) => e.stopPropagation()}>
-        <button 
-          className="btn btn-sm btn-danger" 
-          onClick={onDelete}
-        >
-          🗑️ Delete
+      <div className="note-card-header">
+        <h3>{title}</h3>
+        <button className="pin-btn" onClick={onPin} title={isPinned ? "Unpin" : "Pin"}>
+          {isPinned ? "★" : "☆"}
         </button>
+      </div>
+      <p className="note-description">{truncateText(description, 100)}</p>
+      <div className="note-footer">
+        <span className="note-date">{formatDate(note.date)}</span>
+        <div className="note-actions" onClick={(e) => e.stopPropagation()}>
+          <button 
+            className="btn btn-sm btn-danger" 
+            onClick={onDelete}
+          >
+            🗑️ Delete
+          </button>
+        </div>
       </div>
     </div>
   )

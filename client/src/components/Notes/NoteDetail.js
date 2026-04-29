@@ -16,6 +16,7 @@ const NoteDetail = () => {
     title: "",
     description: "",
     color: "#ffffff",
+    isPinned: false,
   })
 
   const [isEditing, setIsEditing] = useState(false)
@@ -30,7 +31,7 @@ const NoteDetail = () => {
     // eslint-disable-next-line
   }, [id, notes])
 
-  const { _id, title, description, color } = note
+  const { _id, title, description, color, isPinned } = note
 
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value })
@@ -52,14 +53,20 @@ const NoteDetail = () => {
     navigate("/")
   }
 
+  const onPin = () => {
+    const updatedNote = { ...note, isPinned: !isPinned }
+    setNote(updatedNote)
+    updateNote(updatedNote)
+  }
+
   return (
-    <div className="note-detail-container">
+    <div className="note-detail-container glass-panel">
       <button className="btn btn-light back-button" onClick={goBack}>
         ← Back to Home
       </button>
 
       {isEditing ? (
-        <form onSubmit={onSubmit} className="note-edit-form">
+        <form onSubmit={onSubmit} className="note-edit-form glass-panel">
           <div className="form-group">
             <label htmlFor="title">Title</label>
             <input type="text" name="title" value={title} onChange={onChange} required />
@@ -82,9 +89,14 @@ const NoteDetail = () => {
           </div>
         </form>
       ) : (
-        <div className="note-detail" style={{ borderTop: `5px solid ${color}` }}>
+        <div className="note-detail glass-panel" style={{ borderTop: `5px solid ${color}` }}>
           <div className="note-detail-header">
-            <h2>{title}</h2>
+            <h2>
+              {title}
+              <button className="pin-btn" style={{marginLeft: "1rem"}} onClick={onPin} title={isPinned ? "Unpin" : "Pin"}>
+                {isPinned ? "★" : "☆"}
+              </button>
+            </h2>
             <div className="note-detail-actions">
               <button className="btn btn-primary" onClick={() => setIsEditing(true)}>
                 ✏️ Edit
@@ -97,6 +109,16 @@ const NoteDetail = () => {
           <div className="note-detail-content">
             <p>{description}</p>
           </div>
+          {note.date && (
+            <div className="note-detail-footer">
+              <small className="text-muted">
+                Created: {new Date(note.date).toLocaleDateString(undefined, {
+                  year: 'numeric', month: 'long', day: 'numeric',
+                  hour: '2-digit', minute: '2-digit'
+                })}
+              </small>
+            </div>
+          )}
         </div>
       )}
     </div>
