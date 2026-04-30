@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from "react"
+import { Link } from "react-router-dom"
 import { AuthContext } from "../../context/AuthContext"
 import { ThemeContext } from "../../context/ThemeContext"
 import "./Profile.css"
@@ -20,6 +21,14 @@ const Profile = () => {
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
+  })
+
+  // 2FA state
+  const [twoFactorData, setTwoFactorData] = useState({
+    qrCode: null,
+    secret: null,
+    token: "",
+    setupMode: false
   })
 
   // Populate info form from user
@@ -78,6 +87,57 @@ const Profile = () => {
     }
   }
 
+  // Handle 2FA setup
+  const setup2FA = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch("/api/auth/setup-2fa", {
+        method: "POST",
+        headers: {
+          "x-auth-token": localStorage.getItem("token")
+        }
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setTwoFactorData({ ...twoFactorData, qrCode: data.qrCode, secret: data.secret, setupMode: true });
+      } else {
+        showError(data.msg || "Failed to setup 2FA");
+      }
+    } catch (err) {
+      showError("Failed to setup 2FA");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle 2FA enable
+  const enable2FA = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const res = await fetch("/api/auth/enable-2fa", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": localStorage.getItem("token")
+        },
+        body: JSON.stringify({ token: twoFactorData.token })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        showSuccess("2FA enabled successfully!");
+        setTwoFactorData({ qrCode: null, secret: null, token: "", setupMode: false });
+        user.isTwoFactorEnabled = true;
+      } else {
+        showError(data.msg || "Invalid token");
+      }
+    } catch (err) {
+      showError("Failed to enable 2FA");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Avatar initials
   const initials = user
     ? user.name
@@ -92,6 +152,11 @@ const Profile = () => {
     <div className="profile-page">
       {/* Header Card */}
       <div className="profile-header glass-panel">
+        <div className="profile-back-nav">
+          <Link to="/" className="btn btn-light back-btn">
+            <span>⬅️</span> Back to Notes
+          </Link>
+        </div>
         <div className="profile-avatar">{initials}</div>
         <div className="profile-meta">
           <h2 className="profile-name">{user?.name}</h2>
@@ -126,6 +191,12 @@ const Profile = () => {
           onClick={() => { setActiveTab("appearance"); setError(""); setSuccess("") }}
         >
           <span>🎨</span> Appearance
+        </button>
+        <button
+          className={`tab-btn ${activeTab === "security" ? "active" : ""}`}
+          onClick={() => { setActiveTab("security"); setError(""); setSuccess("") }}
+        >
+          <span>🛡️</span> Security
         </button>
       </div>
 
@@ -332,6 +403,55 @@ const Profile = () => {
               Currently using:{" "}
               <strong>{darkMode ? "🌙 Dark Mode" : "☀️ Light Mode"}</strong>
             </div>
+          </div>
+        )}
+
+        {/* Security Tab */}
+        {activeTab === "security" && (
+          <div className="profile-form">
+            <h3 className="form-section-title">Two-Factor Authentication (2FA)</h3>
+            <p className="form-section-desc">
+              Enhance the security of your account by enabling 2FA.
+            </p>
+
+            {user?.isTwoFactorEnabled ? (
+              <div className="alert alert-success">
+                ✅ Two-Factor Authentication is currently enabled.
+              </div>
+            ) : !twoFactorData.setupMode ? (
+              <div>
+                <p>2FA adds an extra layer of security to your account. To log in, you'll need to provide your password and an authenticator code.</p>
+                <button className="btn btn-primary" onClick={setup2FA} disabled={loading}>
+                  {loading ? "Setting up..." : "Setup 2FA"}
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={enable2FA}>
+                <div style={{ background: "#fff", padding: "10px", display: "inline-block", borderRadius: "10px", marginBottom: "15px" }}>
+                  <img src={twoFactorData.qrCode} alt="2FA QR Code" />
+                </div>
+                <p>Scan this QR code with an authenticator app (like Google Authenticator or Authy).</p>
+                <div className="form-group">
+                  <label>Verification Code</label>
+                  <input 
+                    type="text" 
+                    value={twoFactorData.token} 
+                    onChange={(e) => setTwoFactorData({ ...twoFactorData, token: e.target.value })}
+                    placeholder="Enter 6-digit code"
+                    maxLength="6"
+                    required
+                  />
+                </div>
+                <div className="form-actions">
+                  <button type="submit" className="btn btn-primary" disabled={loading}>
+                    {loading ? "Verifying..." : "Enable 2FA"}
+                  </button>
+                  <button type="button" className="btn btn-light" onClick={() => setTwoFactorData({ qrCode: null, secret: null, token: "", setupMode: false })}>
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
         )}
       </div>

@@ -30,6 +30,13 @@ const UserSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  isTwoFactorEnabled: {
+    type: Boolean,
+    default: false,
+  },
+  twoFactorSecret: {
+    type: String,
+  },
 })
 
-module.exports = mongoose.model("user", UserSchema)
+module.exports = mongoose.model("users", UserSchema)

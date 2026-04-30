@@ -235,3 +235,88 @@ body.dark-mode .note-card:hover {
   font-style: italic;
   opacity: 0.8;
 }
+
+/* --- ADVANCED FEATURES CSS --- */
+.notes-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.tab-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-primary);
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.tab-btn.active, .tab-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.row-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.ai-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.checklist-input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.checklist-input-group input[type="text"] {
+  flex: 1;
+}
+
+.checklist-item-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.folder-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  margin-bottom: 10px;
+  color: #000;
+  font-weight: bold;
+}
+
+.note-tags {
+  margin-bottom: 10px;
+}
+
+.note-tag {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  margin-right: 5px;
+  color: var(--text-primary);
+}
+
+.archived {
+  opacity: 0.8;
+}
+
+.trashed {
+  opacity: 0.6;
+  border: 1px dashed red;
+}

@@ -3,13 +3,8 @@ import ReactDOM from "react-dom/client"
 import App from "./App"
 import axios from "axios"
 
-// Set base URL for axios
-// Empty string = relative URLs. In dev, CRA proxy (see package.json "proxy") forwards
-// /api/* to Express on port 3001. In production, Vercel rewrites handle it.
 axios.defaults.baseURL = ""
 
-
-// Add token to headers if exists
 const token = localStorage.getItem("token")
 if (token) {
   axios.defaults.headers.common["x-auth-token"] = token
@@ -21,3 +16,14 @@ root.render(
     <App />
   </React.StrictMode>,
 )
+
+// Register service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js').then(registration => {
+      console.log('SW registered: ', registration);
+    }).catch(registrationError => {
+      console.log('SW registration failed: ', registrationError);
+    });
+  });
+}

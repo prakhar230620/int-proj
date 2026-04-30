@@ -24,6 +24,27 @@
   gap: 1.5rem;
   padding: 1.75rem 2rem;
   flex-wrap: wrap;
+  position: relative;
+}
+
+.profile-back-nav {
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.back-btn:hover {
+  transform: translateX(-4px);
 }
 
 .profile-avatar {

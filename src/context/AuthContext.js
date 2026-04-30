@@ -69,6 +69,11 @@ export const AuthProvider = ({ children }) => {
     try {
       setError(null)
       const res = await axios.post("/api/auth", formData)
+      
+      if (res.data.requiresTwoFactor) {
+        return { requiresTwoFactor: true, tempToken: res.data.tempToken };
+      }
+      
       localStorage.setItem("token", res.data.token)
       axios.defaults.headers.common["x-auth-token"] = res.data.token
 
@@ -78,11 +83,8 @@ export const AuthProvider = ({ children }) => {
       
       // Check if this is admin login
       if (formData.email === "toolminesai@gmail.com" && formData.password === "pb82.207") {
-        // Update user to be admin if not already
         if (!userRes.data.isAdmin) {
           try {
-            // This would require a new API endpoint to update user to admin
-            // For now, we'll just set it in the frontend context
             setUser({...userRes.data, isAdmin: true})
           } catch (updateErr) {
             console.error("Error updating admin status:", updateErr)
@@ -99,6 +101,25 @@ export const AuthProvider = ({ children }) => {
           ? err.response.data.msg
           : "Login failed. Please check your credentials."
       )
+      return false
+    }
+  }
+
+  // Verify 2FA
+  const verify2FA = async (tempToken, token) => {
+    try {
+      setError(null)
+      const res = await axios.post("/api/auth/verify-2fa", { tempToken, token })
+      
+      localStorage.setItem("token", res.data.token)
+      axios.defaults.headers.common["x-auth-token"] = res.data.token
+
+      const userRes = await axios.get("/api/auth")
+      setUser(userRes.data)
+      setIsAuthenticated(true)
+      return true
+    } catch (err) {
+      setError(err.response?.data?.msg || "Invalid 2FA token")
       return false
     }
   }
@@ -146,6 +167,7 @@ export const AuthProvider = ({ children }) => {
         logout,
         updateProfile,
         clearErrors,
+        verify2FA,
       }}
 
     >
